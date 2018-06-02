@@ -1,0 +1,1 @@
+setx /m _NT_SYMBOL_PATH "srv*D:\symbols*https://msdl.microsoft.com/download/symbols"
