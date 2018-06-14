@@ -2,7 +2,7 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 set nu
-set autoindent
+" set autoindent
 colorscheme wombat
 set fileencoding=utf-8
 set encoding=utf-8
@@ -42,12 +42,22 @@ Plugin 'VundleVim/Vundle.vim'
 " taglist
 " Plugin 'file:///home/paradoximov/.vim/bundle/taglist.vim'
 " let Tlist_Ctags_Cmd="/home/paradoximov/Documents/linux/TAGS"
+"
 " tagbar
-Plugin 'file:///home/paradoximov/.vim/bundle/tagbar.vim'
+Plugin 'https://github.com/majutsushi/tagbar.git'
 " let g:tagbar_ctags_bin='/home/paradoximov/Documents/linux/TAGS'
 " let g:tagbar_width=30
 let g:tagbar_left=1
-autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx call tagbar#autoopen()
+" lightline
+set laststatus=2
+if !has('gui_running')
+	set t_Co=256
+endif
+set noshowmode
+Plugin 'https://github.com/itchyny/lightline.vim.git'
+"
+" nerdtree
+Plugin 'https://github.com/scrooloose/nerdtree.git'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -65,3 +75,10 @@ filetype plugin indent on    " required
 " Put your non-Plugin stuff after this line
 
 " vundule end
+"
+" key mapping
+nmap <F8> :TagbarToggle<CR>
+map <C-n> :NERDTreeToggle<CR>
+
+" autocmd
+autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx call tagbar#autoopen()
