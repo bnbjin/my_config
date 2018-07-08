@@ -1,3 +1,17 @@
+" python settings
+set paste
+set expandtab
+set textwidth=0
+set backspace=indent,eol,start
+set incsearch
+set ignorecase
+set ruler
+set wildmenu
+set commentstring=\ #\ %s
+set foldlevel=0
+" python settings end
+
+set hlsearch
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
@@ -6,7 +20,7 @@ set nu
 colorscheme wombat
 set fileencoding=utf-8
 set encoding=utf-8
-" set tags+=/home/paradoximov/Documents/ctags/linux_tag
+syntax on
 
 " vundle start
 
@@ -39,15 +53,11 @@ Plugin 'VundleVim/Vundle.vim'
 " different version somewhere else.
 " Plugin 'ascenator/L9', {'name': 'newL9'}
 "
-" taglist
-" Plugin 'file:///home/paradoximov/.vim/bundle/taglist.vim'
-" let Tlist_Ctags_Cmd="/home/paradoximov/Documents/linux/TAGS"
-"
 " tagbar
 Plugin 'https://github.com/majutsushi/tagbar.git'
-" let g:tagbar_ctags_bin='/home/paradoximov/Documents/linux/TAGS'
+" let g:tagbar_ctags_bin='/home/user_name/Documents/linux/TAGS'
 " let g:tagbar_width=30
-let g:tagbar_left=1
+" let g:tagbar_left=1
 " lightline
 set laststatus=2
 if !has('gui_running')
@@ -76,9 +86,32 @@ filetype plugin indent on    " required
 
 " vundule end
 "
+
+" cscope setting
+if has("cscope")
+  set csprg=/usr/bin/cscope
+  set csto=1
+  set cst
+  set nocsverb
+  " add any database in current directory
+  if filereadable("cscope.out")
+      cs add cscope.out
+  endif
+  set csverb
+endif
+
+nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <C-@>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+
 " key mapping
 nmap <F8> :TagbarToggle<CR>
 map <C-n> :NERDTreeToggle<CR>
 
 " autocmd
-autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx call tagbar#autoopen()
+" autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx call tagbar#autoopen()
