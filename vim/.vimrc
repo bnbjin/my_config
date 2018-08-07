@@ -112,6 +112,7 @@ nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 " key mapping
 nmap <F8> :TagbarToggle<CR>
 map <C-n> :NERDTreeToggle<CR>
+nnoremap <silent> <Esc><Esc> :<C-u>nohlsearch<CR>
 
 " autocmd
 " autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx call tagbar#autoopen()
