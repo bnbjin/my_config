@@ -100,6 +100,9 @@ if has("cscope")
   set csverb
 endif
 
+" ctags setting
+set tags=./tags,tags;
+
 nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>
 nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
 nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>
