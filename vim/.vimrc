@@ -1,25 +1,40 @@
-" python settings
+set ttyfast
+set ttymouse=xterm2
+set ttyscroll=3
+set autoread
+set autowrite
+set backspace=indent,eol,start
+set incsearch
+set hlsearch
+set showcmd
+set hidden
+set ignorecase
+set smartcase
+set completeopt=menu,menuone
+set pumheight=10 
+
 set paste
 set expandtab
 set textwidth=0
-set backspace=indent,eol,start
-set incsearch
-set ignorecase
 set ruler
 set wildmenu
-set commentstring=\ #\ %s
 set foldlevel=0
-" python settings end
 
-set hlsearch
+set nocursorcolumn
+set nocursorline
+set fileformats=unix,mac,dos
+set splitright
+set splitbelow
+set noswapfile
+set nobackup
+set noerrorbells
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
-set nu
-" set autoindent
-colorscheme wombat
+set number
 set fileencoding=utf-8
 set encoding=utf-8
+colorscheme wombat256mod
 syntax on
 
 " vundle start
@@ -53,6 +68,20 @@ Plugin 'VundleVim/Vundle.vim'
 " different version somewhere else.
 " Plugin 'ascenator/L9', {'name': 'newL9'}
 "
+" vim-go
+Plugin 'fatih/vim-go'
+"
+let g:go_test_timeout = '10s'
+" run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#test#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
+"
 " tagbar
 Plugin 'https://github.com/majutsushi/tagbar.git'
 " let g:tagbar_ctags_bin='/home/user_name/Documents/linux/TAGS'
@@ -63,6 +92,7 @@ set laststatus=2
 if !has('gui_running')
 	set t_Co=256
 endif
+set noshowmatch
 set noshowmode
 Plugin 'https://github.com/itchyny/lightline.vim.git'
 "
@@ -112,10 +142,35 @@ nmap <C-@>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
 nmap <C-@>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
 nmap <C-@>d :cs find d <C-R>=expand("<cword>")<CR><CR>
 
+" Enable to copy to clipboard for operations like yank, delete, change and put
+" http://stackoverflow.com/questions/20186975/vim-mac-how-to-copy-to-clipboard-without-pbcopy
+if has('unnamedplus')
+  set clipboard^=unnamed
+  set clipboard^=unnamedplus
+endif
+
+" This enables us to undo files even if you exit Vim.
+if has('persistent_undo')
+  set undofile
+  set undodir=~/.config/vim/tmp/undo//
+endif
+
+" global setting
+let mapleader = ","
+let g:go_list_type = "quickfix"
+
 " key mapping
-nmap <F8> :TagbarToggle<CR>
-map <C-n> :NERDTreeToggle<CR>
+nmap <F6> :TagbarToggle<CR>
+nmap <F5> :NERDTreeToggle<CR>
 nnoremap <silent> <Esc><Esc> :<C-u>nohlsearch<CR>
+map <C-n> :cnext<CR>
+map <C-m> :cprevious<CR>
+nnoremap <leader>a :cclose<CR>
 
 " autocmd
 " autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx call tagbar#autoopen()
+" autocmd FileType go nmap <leader>b  <Plug>(go-build)
+" autocmd FileType go nmap <leader>t  <Plug>(go-test)
+autocmd FileType go nmap <leader>r  <Plug>(go-run)
+autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
