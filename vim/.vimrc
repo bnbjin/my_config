@@ -71,7 +71,9 @@ Plugin 'VundleVim/Vundle.vim'
 " vim-go
 Plugin 'fatih/vim-go'
 "
-let g:go_test_timeout = '10s'
+let g:go_test_timeout = '0s'
+let g:go_list_type = "quickfix"
+" let g:go_fmt_autosave = 1
 " run :GoBuild or :GoTestCompile based on the go file
 function! s:build_go_files()
   let l:file = expand('%')
@@ -117,9 +119,12 @@ filetype plugin indent on    " required
 " vundule end
 "
 
+" global setting
+let mapleader = ","
+
 " cscope setting
 if has("cscope")
-  set csprg=/usr/bin/cscope
+  set csprg=/usr/local/bin/cscope
   set csto=1
   set cst
   set nocsverb
@@ -133,8 +138,8 @@ endif
 " ctags setting
 set tags=./tags,tags;
 
-nmap <C-@>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-nmap <C-@>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <leader>g :cs find g <C-R>=expand("<cword>")<CR><CR>
 nmap <C-@>c :cs find c <C-R>=expand("<cword>")<CR><CR>
 nmap <C-@>t :cs find t <C-R>=expand("<cword>")<CR><CR>
 nmap <C-@>e :cs find e <C-R>=expand("<cword>")<CR><CR>
@@ -155,22 +160,18 @@ if has('persistent_undo')
   set undodir=~/.config/vim/tmp/undo//
 endif
 
-" global setting
-let mapleader = ","
-let g:go_list_type = "quickfix"
-
 " key mapping
 nmap <F6> :TagbarToggle<CR>
 nmap <F5> :NERDTreeToggle<CR>
 nnoremap <silent> <Esc><Esc> :<C-u>nohlsearch<CR>
-map <C-n> :cnext<CR>
-map <C-m> :cprevious<CR>
+map <leader>n :cnext<CR>
+map <leader>m :cprevious<CR>
 nnoremap <leader>a :cclose<CR>
 
 " autocmd
 " autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx call tagbar#autoopen()
 " autocmd FileType go nmap <leader>b  <Plug>(go-build)
 " autocmd FileType go nmap <leader>t  <Plug>(go-test)
-autocmd FileType go nmap <leader>r  <Plug>(go-run)
-autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
-autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
+" autocmd FileType go nmap <leader>r  <Plug>(go-run)
+" autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+" autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
