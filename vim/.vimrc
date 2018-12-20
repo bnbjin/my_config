@@ -11,15 +11,13 @@ set hidden
 set ignorecase
 set smartcase
 set completeopt=menu,menuone
-set pumheight=10 
-
+set pumheight=5 
 set paste
 set expandtab
 set textwidth=0
 set ruler
 set wildmenu
 set foldlevel=0
-
 set nocursorcolumn
 set nocursorline
 set fileformats=unix,mac,dos
@@ -34,8 +32,10 @@ set shiftwidth=4
 set number
 set fileencoding=utf-8
 set encoding=utf-8
-colorscheme wombat256mod
+" colorscheme wombat256mod
+colorscheme wombat
 syntax on
+
 
 " vundle start
 
@@ -50,7 +50,7 @@ call vundle#begin()
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
-
+"
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 " plugin on GitHub repo
@@ -68,11 +68,44 @@ Plugin 'VundleVim/Vundle.vim'
 " different version somewhere else.
 " Plugin 'ascenator/L9', {'name': 'newL9'}
 "
+" python-mode
+Plugin 'python-mode/python-mode', { 'branch': 'develop' }
+let g:pymode = 1
+let g:pymode_warnings = 1
+let g:pymode_python = 'python3'
+let g:pymode_syntax_space_errors = 0
+let g:pymode_trim_whitespaces = 1
+let g:pymode_quickfix_minheight = 3
+let g:pymode_quickfix_maxheight = 6
+let g:pymode_indent = 1
+let g:pymode_options_colorcolumn = 0
+
+let g:pymode_lint = 0
+let g:pymode_doc = 1
+let g:pymode_doc_bind = 'K'
+let g:pymode_rope = 1
+let g:pymode_rope_goto_definition_bind = '<leader>d'
+let g:pymode_rope_regenerate_on_write = 1
+
+"let g:pymode_rope_goto_definition_cmd = 'new'
+"let g:pymode_rope_completion = 1
+"let g:pymode_rope_complete_on_dot = 1
+"let g:pymode_rope_completion_bind = '<C-Space>'
+let g:pymode_run = 1
+let g:pymode_run_bind = '<leader>r'
+
+let g:pymode_motion = 1
+"
+augroup unset_folding_in_insert_mode
+    autocmd!
+    autocmd InsertEnter *.py setlocal foldmethod=marker
+    autocmd InsertLeave *.py setlocal foldmethod=expr
+augroup END
+"
 " vim-go
 Plugin 'fatih/vim-go'
-"
 let g:go_test_timeout = '0s'
-let g:go_list_type = "quickfix"
+" let g:go_list_type = "quickfix"
 " let g:go_fmt_autosave = 1
 " run :GoBuild or :GoTestCompile based on the go file
 function! s:build_go_files()
@@ -100,7 +133,11 @@ Plugin 'https://github.com/itchyny/lightline.vim.git'
 "
 " nerdtree
 Plugin 'https://github.com/scrooloose/nerdtree.git'
-
+"
+" youcompleteme
+" Plugin 'Valloric/YouCompleteMe'
+" let g:ycm_server_python_interpreter = '/usr/bin/python2'
+"
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
