@@ -102,20 +102,35 @@ augroup unset_folding_in_insert_mode
     autocmd InsertLeave *.py setlocal foldmethod=expr
 augroup END
 "
+"
 " vim-go
 Plugin 'fatih/vim-go'
-let g:go_test_timeout = '0s'
-" let g:go_list_type = "quickfix"
+" let g:go_test_timeout = '0s'
+let g:go_list_type = "quickfix"
 " let g:go_fmt_autosave = 1
+let g:go_fmt_command = "goimports"
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_extra_types = 1
+let g:go_highlight_build_constraints = 1
+let g:go_highlight_generate_tags = 1
+let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+let g:go_metalinter_autosave = 1
+"let g:go_metalinter_autosave_enabled = ['vet', 'golint']
+"
 " run :GoBuild or :GoTestCompile based on the go file
-function! s:build_go_files()
-  let l:file = expand('%')
-  if l:file =~# '^\f\+_test\.go$'
-    call go#test#Test(0, 1)
-  elseif l:file =~# '^\f\+\.go$'
-    call go#cmd#Build(0)
-  endif
-endfunction
+"function! s:build_go_files()
+"  let l:file = expand('%')
+"  if l:file =~# '^\f\+_test\.go$'
+"    call go#test#Test(0, 1)
+"  elseif l:file =~# '^\f\+\.go$'
+"    call go#cmd#Build(0)
+"  endif
+"endfunction
+"
 "
 " tagbar
 Plugin 'https://github.com/majutsushi/tagbar.git'
@@ -161,7 +176,7 @@ let mapleader = ","
 
 " cscope setting
 if has("cscope")
-  set csprg=/usr/local/bin/cscope
+  set csprg=/usr/bin/cscope
   set csto=1
   set cst
   set nocsverb
@@ -198,17 +213,20 @@ if has('persistent_undo')
 endif
 
 " key mapping
-nmap <F6> :TagbarToggle<CR>
 nmap <F5> :NERDTreeToggle<CR>
+nmap <F6> :TagbarToggle<CR>
 nnoremap <silent> <Esc><Esc> :<C-u>nohlsearch<CR>
+nnoremap <leader>a :cclose<CR>
+
+" GO-VIM key map settings
 map <leader>n :cnext<CR>
 map <leader>m :cprevious<CR>
-nnoremap <leader>a :cclose<CR>
+autocmd FileType go nmap <leader>z  <Plug>(go-build)
+autocmd FileType go nmap <leader>x  <Plug>(go-test)
+autocmd FileType go nmap <leader>c  <Plug>(go-run)
+autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4
+" autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+" autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
 
 " autocmd
 " autocmd BufReadPost *.cpp,*.c,*.h,*.hpp,*.cc,*.cxx call tagbar#autoopen()
-" autocmd FileType go nmap <leader>b  <Plug>(go-build)
-" autocmd FileType go nmap <leader>t  <Plug>(go-test)
-" autocmd FileType go nmap <leader>r  <Plug>(go-run)
-" autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
-" autocmd FileType go nmap <Leader>c <Plug>(go-coverage-toggle)
