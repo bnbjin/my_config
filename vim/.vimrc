@@ -37,39 +37,30 @@ colorscheme wombat
 syntax on
 
 
-" vundle start
 
-set nocompatible              " be iMproved, required
-filetype on                  " required
+call plug#begin('~/.vim/plugged')
+Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'majutsushi/tagbar'
+Plug 'scrooloose/nerdtree'
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+" lightline
+set laststatus=2
+if !has('gui_running')
+	set t_Co=256
+endif
+set noshowmatch
+set noshowmode
+Plug 'itchyny/lightline.vim'
+call plug#end()
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-"
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
-" Plugin 'tpope/vim-fugitive'
-" plugin from http://vim-scripts.org/vim/scripts.html
-" Plugin 'L9'
-" Git plugin not hosted on GitHub
-" Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-" Plugin 'file:///home/gmarik/path/to/plugin'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-" Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Install L9 and avoid a Naming conflict if you've already installed a
-" different version somewhere else.
-" Plugin 'ascenator/L9', {'name': 'newL9'}
-"
-" python-mode
-Plugin 'python-mode/python-mode', { 'branch': 'develop' }
+" ************* tagbar settings start ***************
+" let g:tagbar_ctags_bin='/home/user_name/Documents/linux/TAGS'
+" let g:tagbar_width=30
+" let g:tagbar_left=1
+" ************* tagbar settings end *******************
+
+" ************ python-mode settings start ***************
 let g:pymode = 1
 let g:pymode_warnings = 1
 let g:pymode_python = 'python3'
@@ -101,10 +92,9 @@ augroup unset_folding_in_insert_mode
     autocmd InsertEnter *.py setlocal foldmethod=marker
     autocmd InsertLeave *.py setlocal foldmethod=expr
 augroup END
-"
-"
-" vim-go
-Plugin 'fatih/vim-go'
+" ************ python-mode settings end ***************
+
+" *************** vim-go settings start ****************
 " let g:go_test_timeout = '0s'
 let g:go_list_type = "quickfix"
 " let g:go_fmt_autosave = 1
@@ -131,45 +121,7 @@ let g:go_metalinter_autosave = 1
 "  endif
 "endfunction
 "
-"
-" tagbar
-Plugin 'https://github.com/majutsushi/tagbar.git'
-" let g:tagbar_ctags_bin='/home/user_name/Documents/linux/TAGS'
-" let g:tagbar_width=30
-" let g:tagbar_left=1
-" lightline
-set laststatus=2
-if !has('gui_running')
-	set t_Co=256
-endif
-set noshowmatch
-set noshowmode
-Plugin 'https://github.com/itchyny/lightline.vim.git'
-"
-" nerdtree
-Plugin 'https://github.com/scrooloose/nerdtree.git'
-"
-" youcompleteme
-" Plugin 'Valloric/YouCompleteMe'
-" let g:ycm_server_python_interpreter = '/usr/bin/python2'
-"
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
-
-" vundule end
-"
+" *************** vim-go settings end ****************
 
 " global setting
 let mapleader = ","
