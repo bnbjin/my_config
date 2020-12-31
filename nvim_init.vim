@@ -45,14 +45,13 @@ Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-rhubarb' " required by fugitive to :Gbrowse
 Plug 'Shougo/deoplete.nvim', {'do':':UpdateRemotePlugins'}
 Plug 'sebdah/vim-delve'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'deoplete-plugins/deoplete-jedi'
 Plug 'davidhalter/jedi-vim'
 Plug 'preservim/nerdtree'
 Plug 'tmhedberg/SimpylFold'
 Plug 'lervag/vimtex'
 Plug 'majutsushi/tagbar'
+Plug 'huytd/vim-espresso-tutti'
 
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
@@ -157,7 +156,8 @@ set ruler
 set number
 
 let no_buffers_menu=1
-silent! colorscheme molokai
+silent! colorscheme elflord
+"colorscheme elflord
 
 set mousemodel=popup
 set t_Co=256
@@ -481,14 +481,16 @@ augroup go
   au Filetype go command! -bang AS call go#alternate#Switch(<bang>0, 'split')
   au Filetype go command! -bang AT call go#alternate#Switch(<bang>0, 'tabe')
 
-  au FileType go nmap <Leader>dd <Plug>(go-def-vertical)
-  au FileType go nmap <Leader>dv <Plug>(go-doc-vertical)
-  au FileType go nmap <Leader>db <Plug>(go-doc-browser)
+  au FileType go nmap <Leader>i <Plug>(go-info)
+  "au FileType go nmap <Leader>dv <Plug>(go-def-vertical)
+  au FileType go nmap <Leader>ds <Plug>(go-def-split)
+  "au FileType go nmap <Leader>do <Plug>(go-doc-vertical)
+  au FileType go nmap <Leader>is <Plug>(go-doc-split)
+  au FileType go nmap <Leader>ib <Plug>(go-doc-browser)
 
-  au FileType go nmap <leader>r  <Plug>(go-run)
+  au FileType go nmap <leader>r  <Plug>(go-referrers)
   au FileType go nmap <leader>t  <Plug>(go-test)
   au FileType go nmap <Leader>gt <Plug>(go-coverage-toggle)
-  au FileType go nmap <Leader>i <Plug>(go-info)
   au FileType go nmap <silent> <Leader>l <Plug>(go-metalinter)
   au FileType go nmap <C-g> :GoDecls<cr>
   au FileType go nmap <leader>dr :GoDeclsDir<cr>
@@ -556,5 +558,11 @@ endif
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
-let g:NERDTreeWinSize = 25
-let g:tagbar_width = 25
+let g:NERDTreeWinSize = 40
+let g:tagbar_width = 40
+
+" vimtex
+let g:tex_flavor = 'latex'
+
+" theme rspresso tutti
+colo espresso-tutti
